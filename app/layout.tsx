@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SessionProvider } from "@/components/SessionProvider";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "./api/auth/[...nextauth]";
+import { authOptions } from "../lib/auth";
+import Login from "@/components/Login";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,22 +19,26 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
+  console.log(session)
   return (
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider session={session}>
+          {!session ? (
+            <Login />
+          ) : (
+            <div className="flex">
+              {/* SideBar */}
+              <div className="bg-[#202123] max-w-xs h-screen overflow-y-auto md:min-w-[20rem]">
+                <SideBar />
+              </div>
+              {/* ClientProvider - Notification */}
+              {/* SideBar */}
 
-        <div className="flex">
-          {/* SideBar */}
-          <div className="bg-[#202123] max-w-xs h-screen overflow-y-auto md:min-w-[20rem]">
-            <SideBar />
-          </div>
-          {/* ClientProvider - Notification */}
-          {/* SideBar */}
-
-          <div className="bg-[#343541] flex-1">{children}</div>
-        </div>
+              <div className="bg-[#343541] flex-1">{children}</div>
+            </div>
+          )}
         </SessionProvider>
       </body>
     </html>
