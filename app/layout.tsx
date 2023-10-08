@@ -1,3 +1,4 @@
+
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -22,7 +23,7 @@ export default function RootLayout({
     {/* ClientProvider - Notification */}
     {/* SideBar */}
         
-        <div>{children}</div>
+        <div className="bg-[#343541] flex-1">{children}</div>
         </div>
       </body>
     </html>
